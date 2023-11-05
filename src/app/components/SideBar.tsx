@@ -6,6 +6,7 @@ import Footer from "./Footer"
 import Logo from "./Logo"
 import { usePathname } from "next/navigation"
 import styled from "@emotion/styled"
+import Link from "next/link"
 
 const SidebarContainer = styled.aside`
    display: flex;
@@ -30,7 +31,7 @@ const SidebarList = styled.ul`
    color: #272343;
 `
 
-const SidebarLink = styled.a<{ $isCurrent: boolean }>`
+const SidebarLink = styled(Link)<{ $isCurrent: boolean }>`
    display: flex;
    font-size: 18px;
    padding: 16px 24px;
