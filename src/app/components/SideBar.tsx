@@ -1,12 +1,13 @@
 "use client"
 
-import Link from "next/link"
+
 import Image from "next/image"
 import Footer from "./Footer"
 import Logo from "./Logo"
+import { usePathname } from "next/navigation"
 import styled from "@emotion/styled"
 
-const Saside = styled.aside`
+const SidebarContainer = styled.aside`
    display: flex;
    position: fixed;
    left: 0;
@@ -18,10 +19,9 @@ const Saside = styled.aside`
    border-right: 1px solid #e3e2e7;
    color: #272343;
    justify-content: space-between;
-   
 `
 
-const Sul = styled.ul`
+const SidebarList = styled.ul`
    display: flex;
    padding: 16px 0px;
    flex-direction: column;
@@ -30,7 +30,7 @@ const Sul = styled.ul`
    color: #272343;
 `
 
-const SLink = styled(Link)`
+const SidebarLink = styled.a<{ $isCurrent: boolean }>`
    display: flex;
    font-size: 18px;
    padding: 16px 24px;
@@ -39,43 +39,48 @@ const SLink = styled(Link)`
    font-style: normal;
    font-weight: 500;
    line-height: 27px;
-   color: #272343;
+   background: ${(props) => (props.$isCurrent ? "#F2EAE1" : "#fbf8f5")};
+   cursor: pointer;
+   color:#272343
 `
 
 type Props = {}
 
 export default function SideBar({}: Props) {
+  const pathname = usePathname()
+
    return (
-      <Saside>
-            <div>
-               <Logo />
-               <nav>
-                  <Sul>
-                     <li>
-                        <SLink className=" flex gap-4 py-4 px-6" href="/">
-                           <Image src="/row-vertical.svg" alt="" width={24} height={24} /> Home
-                        </SLink>
-                     </li>
-                     <li>
-                        <SLink className=" flex gap-4 py-4 px-6" href="/Accounts">
-                           <Image src="/row-vertical.svg" alt="" width={24} height={24} /> Accounts
-                        </SLink>
-                     </li>
-                     <li>
-                        <SLink className=" flex gap-4 py-4 px-6" href="/Workspaces">
-                           <Image src="/slider-horizontal.svg" alt="" width={24} height={24} />{" "}
-                           Workspaces
-                        </SLink>
-                     </li>
-                     <li className="border-b border-[#E3E2E7]">
-                        <SLink className=" flex gap-4 py-4 px-6" href="/Account">
-                           <Image src="/user-octagon.svg" alt="" width={24} height={24} /> Account
-                        </SLink>
-                     </li>
-                  </Sul>
-               </nav>
-            </div>
+      <SidebarContainer>
+         <div>
+            <Logo />
+            <nav>
+               <SidebarList>
+                  <li>
+                     <SidebarLink $isCurrent={pathname === "/"} href="/">
+                        <Image src="/row-vertical.svg" alt="" width={24} height={24} /> Home
+                     </SidebarLink>
+                  </li>
+                  <li>
+                     <SidebarLink $isCurrent={pathname === "/accounts"} href="/accounts">
+                        <Image src="/row-vertical.svg" alt="" width={24} height={24} /> Accounts
+                     </SidebarLink>
+                  </li>
+                  <li>
+                     <SidebarLink $isCurrent={pathname === "/Workspaces"} href="/Workspaces">
+                        <Image src="/slider-horizontal.svg" alt="" width={24} height={24} />
+                        Workspaces
+                     </SidebarLink>
+                  </li>
+                  <li>
+                     <SidebarLink $isCurrent={pathname === "/Workspaces"} href="/Workspaces">
+                        <Image src="/user-octagon.svg" alt="" width={24} height={24} />
+                        Account
+                     </SidebarLink>
+                  </li>
+               </SidebarList>
+            </nav>
+         </div>
          <Footer />
-      </Saside>
+      </SidebarContainer>
    )
 }
